@@ -1,8 +1,8 @@
-// $(document).ready(function () {
-//   $.ajax({
-//     type: "GET",
-//     url: "/api",
-//   }).then((res) => {
-//     console.log(res);
-//   });
-// });
+$(document).ready(function () {
+  $.ajax({
+    type: "GET",
+    url: "/api",
+  }).then((res) => {
+    console.log(res);
+  });
+});
