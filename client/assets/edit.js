@@ -1,6 +1,5 @@
 $(document).ready(function () {
   const urlParams = new URLSearchParams(window.location.search);
-  console.log(urlParams.get("id"));
   const id = urlParams.get("id");
 
   $.ajax({
@@ -14,7 +13,7 @@ $(document).ready(function () {
   $("#editBtn").on("click", () => {
     const editTodo = $("#editTodo").val();
     console.log(editTodo);
-    let checkBox = $("#completedCheck").is(":checked") ? true : false;
+    let checkBox = $("#completedCheck").is(":checked") ? "true" : "false";
 
     $.ajax({
       type: "PATCH",
@@ -24,10 +23,12 @@ $(document).ready(function () {
         todoId: id,
         todoCompleted: checkBox,
       },
-    }).then((res) => {
-      console.log(res);
-      window.location.href = "/";
-    });
+    })
+      .then((res) => {
+        console.log(res);
+        window.location.href = "/";
+      })
+      .catch((err) => console.log(err));
   });
 
   // $.ajax({
