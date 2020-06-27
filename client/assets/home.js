@@ -6,14 +6,17 @@ $(document).ready(function () {
   $("#submitBtn").on("click", () => {
     const todoText = $("#userInput").val();
     $("#userInput").val("");
-    console.log(todoText);
 
     $.ajax({
       type: "POST",
       url: "/api",
       data: { todo: todoText },
     }).then((response) => {
-      console.log(response);
+      getTodos()
+        .then((allTodos) => {
+          renderTodos(allTodos);
+        })
+        .catch((err) => console.log(err));
     });
   });
 });
@@ -24,8 +27,8 @@ const getTodos = () => {
       type: "GET",
       url: "/api",
     })
-      .then((allTodos) => {
-        resolve(allTodos);
+      .then((res) => {
+        resolve(res);
       })
       .catch((err) => reject(err));
   });
