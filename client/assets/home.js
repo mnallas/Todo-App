@@ -1,12 +1,36 @@
 $(document).ready(function () {
-  $.ajax({
-    type: "GET",
-    url: "/api",
-  }).then((allTodos) => {
-    console.log(allTodos);
+  getTodos().then((allTodos) => {
     renderTodos(allTodos);
   });
+
+  $("#submitBtn").on("click", () => {
+    const todoText = $("#userInput").val();
+    $("#userInput").val("");
+    console.log(todoText);
+
+    $.ajax({
+      type: "POST",
+      url: "/api",
+      data: { todo: todoText },
+    }).then((response) => {
+      console.log(response);
+    });
+  });
 });
+
+const getTodos = () => {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      type: "GET",
+      url: "/api",
+    })
+      .then((allTodos) => {
+        resolve(allTodos);
+      })
+      .catch((err) => reject(err));
+  });
+};
+
 const renderTodos = (arr) => {
   $("#card-container").html("");
   arr.forEach((todo) => {
@@ -19,7 +43,7 @@ const renderTodos = (arr) => {
             ${msg}
           </h6>
           <p class="card-text mt-2">
-            ${todo.text}
+            ${todo.todo}
           </p>
           <div class="text-center">
             <button data-id=${todo.id} style="width: 150px;" class="btn btn-outline-success btnUpdate">
